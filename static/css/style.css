@@ -3151,15 +3151,41 @@ select.kw-input option {
 }
 
 /* Light theme overrides */
+[data-theme="light"] {
+    --text-muted: rgba(0, 0, 0, 0.45);
+}
 [data-theme="light"] .res-mode-card {
     background: #f8fafc;
 }
 [data-theme="light"] .res-mode-card--active {
     background: rgba(99, 102, 241, 0.06) !important;
 }
+[data-theme="light"] .res-option-row:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
 [data-theme="light"] .res-option-row--child {
     background: rgba(0,0,0,0.02);
 }
 [data-theme="light"] .res-section-subtitle {
     color: rgba(0,0,0,0.45);
+}
+[data-theme="light"] .res-tag-box {
+    background: #f8fafc;
+    border-color: rgba(60, 40, 20, 0.15);
+}
+[data-theme="light"] .res-tag {
+    background: rgba(5, 150, 105, 0.08);
+    border-color: rgba(5, 150, 105, 0.25);
+    color: var(--success);
+}
+.resolution-section-wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    width: 100%;
+}
+[data-theme="light"] .resolution-section-wrapper {
+    background: #f1f5f9;
+    border-color: rgba(60, 40, 20, 0.12);
 }

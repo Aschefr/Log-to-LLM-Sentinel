@@ -238,6 +238,7 @@ class GlobalConfig(Base):
     discord_webhook_url = Column(String, nullable=True)
     syslog_enabled = Column(Boolean, default=False)
     syslog_forward_addr = Column(String, nullable=True)  # Format 'IP:port' or 'IP' (default port 514)
+    log_rotation_limit_mb = Column(Integer, default=10)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 class ChatConversation(Base):

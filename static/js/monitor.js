@@ -304,6 +304,7 @@ function renderTabContent(rule) {
             <div class="viewer-actions" onclick="event.stopPropagation()">
                 <button class="btn btn-secondary btn-sm" id="freeze-btn-${rule.id}" onclick="toggleFreeze(${rule.id})">${window.t ? '❄️ ' + window.t('monitor.freeze') : '❄️ Freeze'}</button>
                 <button class="btn btn-secondary btn-sm" onclick="copyViewerContent(${rule.id})">${window.t ? window.t('common.copy') : 'Copy'}</button>
+                <button class="btn btn-secondary btn-sm" onclick="downloadRuleLog(${rule.id})">📥 ${window.t ? window.t('common.download') : 'Download'}</button>
             </div>
         </div>
         <div class="monitor-log-viewer" id="log-viewer-${rule.id}">
@@ -1535,4 +1536,8 @@ async function auditPatternsWithAI(ruleId, btnEl) {
         btnEl.disabled = false;
         btnEl.innerHTML = origHtml;
     }
+}
+
+function downloadRuleLog(ruleId) {
+    window.location.href = `/api/rules/${ruleId}/download`;
 }

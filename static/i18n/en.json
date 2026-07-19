@@ -474,7 +474,9 @@
     "cleanup_done": "Cleanup complete.",
     "import_success": "Import successful.",
     "import_error": "Error during import",
-    "disk_error": "Error"
+    "disk_error": "Error",
+    "log_rotation_limit": "Maximum log file size (Rotation)",
+    "log_rotation_limit_hint": "Sets the maximum size for Syslog and Webhook log files before rotation."
   },
   "common": {
     "retry": "Retry",
@@ -502,7 +504,8 @@
     "view_in_monitor": "View in Monitor",
     "save": "Save",
     "edit": "Edit",
-    "time_ago": "ago"
+    "time_ago": "ago",
+    "download": "Download"
   },
   "meta": {
     "title": "Meta-Analysis",

@@ -239,6 +239,9 @@ async function loadConfig() {
         const syslogForwardAddrEl = document.getElementById('syslog-forward-addr');
         if (syslogForwardAddrEl) syslogForwardAddrEl.value = config.syslog_forward_addr || '';
         
+        const logRotationLimitMbEl = document.getElementById('log-rotation-limit-mb');
+        if (logRotationLimitMbEl) logRotationLimitMbEl.value = config.log_rotation_limit_mb || 10;
+        
         const syslogCurrentIpEl = document.getElementById('syslog-current-ip');
         if (syslogCurrentIpEl) {
             const displayIp = (config.server_ip && config.server_ip !== 'localhost') ? config.server_ip : (window.location.hostname || 'IP_HOTE');
@@ -699,6 +702,7 @@ async function saveConfig(messageEl, isAutoSave = false) {
         auto_delete_analyses: document.getElementById('auto-delete-analyses') ? document.getElementById('auto-delete-analyses').checked : false,
         syslog_enabled: document.getElementById('syslog-enabled') ? document.getElementById('syslog-enabled').checked : false,
         syslog_forward_addr: document.getElementById('syslog-forward-addr') ? document.getElementById('syslog-forward-addr').value.trim() : '',
+        log_rotation_limit_mb: document.getElementById('log-rotation-limit-mb') ? parseInt(document.getElementById('log-rotation-limit-mb').value) || 10 : 10,
     };
 
     const retSelect = document.getElementById('retention-period');

@@ -24,6 +24,7 @@ class GlobalConfigCreate(BaseModel):
     debug_mode: bool = False
     ollama_prompt_lang: str = 'fr'  # 'fr' | 'en'
     discord_webhook_url: Optional[str] = None
+    log_rotation_limit_mb: int = 10
 
 
 class GlobalConfigRead(GlobalConfigCreate):

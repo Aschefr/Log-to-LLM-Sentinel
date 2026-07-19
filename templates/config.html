@@ -352,6 +352,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="log-rotation-limit-mb" data-i18n="config.log_rotation_limit">Taille maximale des fichiers de log (Rotation)</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="number" id="log-rotation-limit-mb" value="10" min="1" max="1000" style="flex: 1;">
+                            <span style="font-size: 0.9rem; color: var(--text-dim);">MB</span>
+                        </div>
+                        <div class="form-hint" data-i18n="config.log_rotation_limit_hint">Définit la taille maximale pour les fichiers de log Syslog et Webhook avant rotation.</div>
+                    </div>
+
                     <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
                         <h4 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.9rem;" data-i18n="config.disk_usage_title">Espace Disque (Dossier Data)</h4>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">

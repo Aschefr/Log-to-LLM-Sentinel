@@ -474,7 +474,9 @@
     "cleanup_done": "Nettoyage terminé.",
     "import_success": "Importation réussie.",
     "import_error": "Erreur lors de l'importation",
-    "disk_error": "Erreur"
+    "disk_error": "Erreur",
+    "log_rotation_limit": "Taille maximale des fichiers de log (Rotation)",
+    "log_rotation_limit_hint": "Définit la taille maximale pour les fichiers de log Syslog et Webhook avant rotation."
   },
   "common": {
     "retry": "Ré-essayer",
@@ -502,7 +504,8 @@
     "view_in_monitor": "Voir dans Monitor",
     "save": "Enregistrer",
     "edit": "Modifier",
-    "time_ago": "Il y a"
+    "time_ago": "Il y a",
+    "download": "Télécharger"
   },
   "meta": {
     "title": "Méta-Analyse",

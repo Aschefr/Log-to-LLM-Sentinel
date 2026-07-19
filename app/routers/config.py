@@ -92,6 +92,7 @@ class ConfigUpdate(BaseModel):
     auto_delete_retention_days: Optional[int] = None
     syslog_enabled: Optional[bool] = None
     syslog_forward_addr: Optional[str] = None
+    log_rotation_limit_mb: Optional[int] = None
 
 
 @router.get("")
@@ -132,6 +133,7 @@ def get_config():
             "auto_delete_retention_days": config.auto_delete_retention_days,
             "syslog_enabled": config.syslog_enabled,
             "syslog_forward_addr": config.syslog_forward_addr or '',
+            "log_rotation_limit_mb": config.log_rotation_limit_mb or 10,
             "server_ip": os.environ.get("SENTINEL_HOST_IP") or "localhost",
         }
     finally:
@@ -206,6 +208,8 @@ async def update_config(config_data: ConfigUpdate):
             config.syslog_enabled = config_data.syslog_enabled
         if config_data.syslog_forward_addr is not None:
             config.syslog_forward_addr = config_data.syslog_forward_addr
+        if config_data.log_rotation_limit_mb is not None:
+            config.log_rotation_limit_mb = config_data.log_rotation_limit_mb
 
         db.commit()
 

@@ -47,6 +47,7 @@ async function loadRules() {
                 </div>
                 <div class="rule-actions">
                     <button id="test-btn-${rule.id}" class="btn btn-secondary btn-sm" onclick="testRule(${rule.id})">🧪 ${window.t ? window.t('rules.test_rule') : 'Test'}</button>
+                    <button class="btn btn-secondary btn-sm" onclick="downloadRuleLog(${rule.id})">📥 ${window.t ? window.t('common.download') : 'Download'}</button>
                     <button class="btn btn-primary btn-sm" onclick="editRule(${rule.id})">✏️ ${window.t ? window.t('common.edit') : 'Edit'}</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteRule(${rule.id}, this)">🗑️ ${window.t ? window.t('common.delete') : 'Delete'}</button>
                 </div>
@@ -258,4 +259,8 @@ async function deleteRule(id, btnElement) {
             alert((window.t ? window.t('common.error') : 'Erreur') + ': ' + error.message);
         }
     });
+}
+
+function downloadRuleLog(ruleId) {
+    window.location.href = `/api/rules/${ruleId}/download`;
 }

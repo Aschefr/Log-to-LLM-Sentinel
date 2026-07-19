@@ -102,6 +102,7 @@ def init_db():
         )""",
         "ALTER TABLE global_config ADD COLUMN syslog_enabled BOOLEAN DEFAULT 0",
         "ALTER TABLE global_config ADD COLUMN syslog_forward_addr VARCHAR DEFAULT NULL",
+        "ALTER TABLE global_config ADD COLUMN log_rotation_limit_mb INTEGER DEFAULT 10",
     ]
 
     with engine.connect() as conn:

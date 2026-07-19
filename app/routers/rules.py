@@ -518,3 +518,46 @@ _(Analyse complète disponible dans l'interface)_
         }
     finally:
         db.close()
+
+
+@router.get("/{rule_id}/download")
+def download_rule_log(rule_id: int):
+    from fastapi.responses import FileResponse
+    from pathlib import Path
+    from app.routers.files import _resolve_under_roots
+    
+    db = SessionLocal()
+    try:
+        rule = db.query(Rule).filter(Rule.id == rule_id).first()
+        if not rule:
+            raise HTTPException(status_code=404, detail="Règle introuvable")
+        
+        path_str = rule.log_file_path
+        target_path = None
+        
+        if path_str.startswith("[WEBHOOK]:"):
+            token = path_str.split(":", 1)[1]
+            data_dir = os.environ.get("SENTINEL_DATA_DIR", "/app/data")
+            target_path = Path(data_dir) / "webhooks" / f"{token}.log"
+        elif path_str.startswith("[SYSLOG]:"):
+            hostname = path_str.split(":", 1)[1]
+            data_dir = os.environ.get("SENTINEL_DATA_DIR", "/app/data")
+            target_path = Path(data_dir) / "syslog" / f"{hostname}.log"
+        else:
+            target_path = _resolve_under_roots(path_str)
+            
+        if not target_path or not target_path.exists() or not target_path.is_file():
+            raise HTTPException(status_code=404, detail="Fichier log introuvable ou vide")
+            
+        # Clean file name for header
+        safe_name = "".join(c for c in rule.name if c.isalnum() or c in "-_ ").strip().replace(" ", "_")
+        if not safe_name:
+            safe_name = f"rule_{rule.id}"
+            
+        return FileResponse(
+            path=target_path,
+            filename=f"{safe_name}.log",
+            media_type="application/octet-stream"
+        )
+    finally:
+        db.close()

@@ -1,5 +1,21 @@
 import asyncio
 from contextlib import asynccontextmanager
+import logging
+
+class WebhookAccessLogFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        # Suppress access logs for the webhook receiver endpoint to avoid spamming docker logs
+        if record.args and len(record.args) >= 3:
+            path = record.args[2]
+            if isinstance(path, str) and "/api/webhook/logs/" in path:
+                return False
+        msg = record.getMessage()
+        if "/api/webhook/logs/" in msg:
+            return False
+        return True
+
+# Apply the filter to the uvicorn.access logger
+logging.getLogger("uvicorn.access").addFilter(WebhookAccessLogFilter())
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles

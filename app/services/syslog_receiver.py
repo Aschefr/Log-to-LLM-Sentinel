@@ -52,22 +52,22 @@ def _append_to_disk(hostname: str, lines: list[str]):
         with open(fp, "a", encoding="utf-8") as f:
             for line in lines:
                 f.write(line + "\n")
-        _maybe_truncate(fp)
+        
+        limit_mb = 10
+        db = SessionLocal()
+        try:
+            config = db.query(GlobalConfig).first()
+            if config and config.log_rotation_limit_mb:
+                limit_mb = config.log_rotation_limit_mb
+        except Exception:
+            pass
+        finally:
+            db.close()
+            
+        from app.utils.log_utils import rotate_log_file
+        rotate_log_file(fp, limit_mb * 1024 * 1024)
     except Exception as e:
         logger.warning(f"Syslog log write error: {e}")
-
-def _maybe_truncate(fp: Path):
-    try:
-        stat = fp.stat()
-        if stat.st_size < 100_000:
-            return
-        with open(fp, "r", encoding="utf-8", errors="ignore") as f:
-            all_lines = f.readlines()
-        if len(all_lines) > _BUFFER_MAX:
-            with open(fp, "w", encoding="utf-8") as f:
-                f.writelines(all_lines[-_BUFFER_MAX:])
-    except Exception:
-        pass
 
 
 class SyslogProtocol(asyncio.DatagramProtocol):
